@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LaboratorioJOGO.c" />
     <ClCompile Include="Skelements.c" />
   </ItemGroup>
   <ItemGroup>

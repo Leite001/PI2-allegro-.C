@@ -321,7 +321,7 @@ int main() {
 
 	//
 
-		//variaveis	
+	//variaveis	
 	ALLEGRO_BITMAP* menuImg = al_load_bitmap("Imagens/MenuImagem.png");
 	Personagem principal = { 400.0f, 450.0f, 320.0f, 400.0f, 0.03f, 0.0f, true, false, true, false,1 ,30 };
 	float balaX = 0.0f;
