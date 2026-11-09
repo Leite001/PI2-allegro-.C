@@ -324,6 +324,7 @@ int main() {
 
 	//variaveis	
 	ALLEGRO_BITMAP* menuImg = al_load_bitmap("Imagens/MenuImagem.png");
+	ALLEGRO_BITMAP* personagemImg = al_load_bitmap("Imagens/skeleton-walk.png");
 	Personagem principal = { 400.0f, 450.0f, 320.0f, 400.0f, 0.03f, 0.0f, true, false, true, false,1 ,30 };
 	float balaX = 0.0f;
 	float balaY = 0.0f;
@@ -339,7 +340,7 @@ int main() {
 	bool rodando = true;
 	ALLEGRO_EVENT_QUEUE* filaEventos = al_create_event_queue();
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60.0);
-
+	//50 e 80
 	//
 
 	//registro de eventos
@@ -476,11 +477,11 @@ int main() {
 				// texto da vida do personagem
 				al_draw_textf(fonte, al_map_rgb(255, 255, 255), 10, 10, 0, "Vida: %d", principal.vida);
 
-
+				
 				if (principal.vida > 0) {
 					principal.ativo = true;
-					al_draw_filled_rectangle(principal.xi, principal.yi, principal.xf, principal.yf, al_map_rgb(255, 0, 0));//personagem
-
+				//	al_draw_filled_rectangle(principal.xi, principal.yi, principal.xf, principal.yf, al_map_rgb(255, 0, 0));//personagem
+					al_draw_bitmap_region(personagemImg, 0, 0, 30, 30, 50, 80, 0);
 				}
 				else {
 					principal.ativo = false;
@@ -520,7 +521,7 @@ int main() {
 
 			}
 
-			else if (laboratorio == true && menu == false && jogo == false)
+			else if (laboratorio == true && menu == false && jogo == false)//laboratorio rodando
 			{
 				ALLEGRO_MOUSE_STATE mouse;
 				al_get_mouse_state(&mouse);
@@ -533,7 +534,7 @@ int main() {
 		}
 		al_flip_display();
 	}
-
+	al_destroy_bitmap(personagemImg);
 	al_destroy_event_queue(filaEventos);
 	al_destroy_timer(timer);
 	al_destroy_bitmap(menuImg);
