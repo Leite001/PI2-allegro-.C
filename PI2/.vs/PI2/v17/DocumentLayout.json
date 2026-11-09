@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\caio.eariciati\\Desktop\\Repos\\PI2-allegro-.C\\PI2\\",
+  "WorkspaceRootPath": "C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2A07690-39C3-4F23-8518-9B90C4A96BE9}|PI2.vcxproj|C:\\Users\\caio.eariciati\\Desktop\\Repos\\PI2-allegro-.C\\PI2\\Skelements.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A2A07690-39C3-4F23-8518-9B90C4A96BE9}|PI2.vcxproj|C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\Skelements.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2A07690-39C3-4F23-8518-9B90C4A96BE9}|PI2.vcxproj|solutionrelative:Skelements.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -14,20 +14,28 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Skelements.c",
-              "DocumentMoniker": "C:\\Users\\caio.eariciati\\Desktop\\Repos\\PI2-allegro-.C\\PI2\\Skelements.c",
+              "DocumentMoniker": "C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\Skelements.c",
               "RelativeDocumentMoniker": "Skelements.c",
-              "ToolTip": "C:\\Users\\caio.eariciati\\Desktop\\Repos\\PI2-allegro-.C\\PI2\\Skelements.c",
-              "RelativeToolTip": "Skelements.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKsBAAABAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\Skelements.c*",
+              "RelativeToolTip": "Skelements.c*",
+              "ViewState": "AgIAAAcCAAAAAAAAAAAAwC8CAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2026-11-06T21:21:58.673Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }
