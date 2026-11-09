@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include<allegro5/allegro_image.h>
+#include "LaboratorioJOGO.h"
 
 typedef struct {
 	float x;
@@ -44,7 +45,7 @@ void movimentacao(Personagem* p, int largura_tela) {
 
 	//variaveis
 	p->velocidade = 5.0f;
-	float gravidade = 0.18f;
+	float gravidade = 0.2f;
 	//
 
 // Movimentação para a esquerda
@@ -73,7 +74,7 @@ void movimentacao(Personagem* p, int largura_tela) {
 
 	// Pulo
 	if (al_key_down(&teclado, ALLEGRO_KEY_UP) && p->noChao == true && p->ativo == true && p->noAr == false) {
-		p->velocidadePulo = -6.45f;
+		p->velocidadePulo = -6.0f;
 		p->noChao = false;
 	}
 
@@ -518,32 +519,16 @@ int main() {
 				}
 
 			}
-			else if (laboratorio == true && menu == false && jogo == false) // laboratorio rodando
+
+			else if (laboratorio == true && menu == false && jogo == false)
 			{
-				//funções variaveis
-				if (al_mouse_button_down(&mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse.x >= 10 && mouse.x <= 150 && mouse.y >= 10 && mouse.y <= 40) {
-					menu = true;
-					laboratorio = false;
-					jogo = false;
-				}
+				ALLEGRO_MOUSE_STATE mouse;
+				al_get_mouse_state(&mouse);
 
+				laboratorio_atualizar(&mouse, &menu, &laboratorio, &jogo);
 
-
-				//
-				al_clear_to_color(al_map_rgb(255, 255, 255));
-				//desenhos do laboratorio
-
-				al_draw_rectangle(10, 10, 150, 40, al_map_rgb(0, 0, 0), 2);
-				al_draw_textf(fonte, al_map_rgb(0, 0, 0), 10, 10, 0, "Voltar <--");
-				al_draw_textf(fonte, al_map_rgb(0, 0, 0), largura_tela / 2 - 50, 10, 0, "LABORATÓRIO");
-
-				al_draw_line(0, 50, largura_tela, 50, al_map_rgb(0, 0, 0), 2);
-				al_draw_line(80, 50, 80, altura_tela, al_map_rgb(0, 0, 0), 2);
-
-
-				//
-
-			}
+				laboratorio_desenhar(fonte, largura_tela, altura_tela);
+}
 
 		}
 		al_flip_display();

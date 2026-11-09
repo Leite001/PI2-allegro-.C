@@ -15,3 +15,14 @@ PI2/packages/Allegro.5.2.11.3/Allegro.5.2.11.3.nupkg
 *.db
 *.db-wal
 *.opendb
+*.pdb
+*.exe
+*.idb
+*.obj
+*.tlog
+*.ilk
+*.filters
+*.vcxproj
+*.json
+*.db
+/PI2/.vs

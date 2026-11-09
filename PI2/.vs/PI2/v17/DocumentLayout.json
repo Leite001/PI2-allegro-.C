@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2A07690-39C3-4F23-8518-9B90C4A96BE9}|PI2.vcxproj|C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\Skelements.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2A07690-39C3-4F23-8518-9B90C4A96BE9}|PI2.vcxproj|solutionrelative:Skelements.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2A07690-39C3-4F23-8518-9B90C4A96BE9}|PI2.vcxproj|C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\LaboratorioJOGO.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2A07690-39C3-4F23-8518-9B90C4A96BE9}|PI2.vcxproj|solutionrelative:LaboratorioJOGO.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2A07690-39C3-4F23-8518-9B90C4A96BE9}|PI2.vcxproj|C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\Skelements.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2A07690-39C3-4F23-8518-9B90C4A96BE9}|PI2.vcxproj|solutionrelative:Skelements.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2A07690-39C3-4F23-8518-9B90C4A96BE9}|PI2.vcxproj|C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\LaboratorioJOGO.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2A07690-39C3-4F23-8518-9B90C4A96BE9}|PI2.vcxproj|solutionrelative:LaboratorioJOGO.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,41 +22,54 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "LaboratorioJOGO.h",
+              "DocumentMoniker": "C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\LaboratorioJOGO.h",
+              "RelativeDocumentMoniker": "LaboratorioJOGO.h",
+              "ToolTip": "C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\LaboratorioJOGO.h",
+              "RelativeToolTip": "LaboratorioJOGO.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-11-09T20:47:38.776Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "LaboratorioJOGO.c",
               "DocumentMoniker": "C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\LaboratorioJOGO.c",
               "RelativeDocumentMoniker": "LaboratorioJOGO.c",
               "ToolTip": "C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\LaboratorioJOGO.c",
               "RelativeToolTip": "LaboratorioJOGO.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2026-11-09T20:46:23.957Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Skelements.c",
               "DocumentMoniker": "C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\Skelements.c",
               "RelativeDocumentMoniker": "Skelements.c",
-              "ToolTip": "C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\Skelements.c",
-              "RelativeToolTip": "Skelements.c",
-              "ViewState": "AgIAAA0CAAAAAAAAAAAAwCECAAAEAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\arthur.lbeserra\\Desktop\\PI2-allegro-.C\\PI2\\Skelements.c*",
+              "RelativeToolTip": "Skelements.c*",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAC8AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2026-11-06T21:21:58.673Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }
