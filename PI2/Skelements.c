@@ -33,8 +33,11 @@ typedef struct {
 	bool virou;
 	bool ativo;
 	bool noAr;
+	bool andando;
 	int dano;
 	int vida;
+	int frame;
+	int contadorFrame;
 }Personagem;
 
 void movimentacao(Personagem* p, int largura_tela) {
@@ -48,18 +51,50 @@ void movimentacao(Personagem* p, int largura_tela) {
 	float gravidade = 0.2f;
 	//
 
-// Movimentação para a esquerda
+//idle - parado
+	if (p->andando == false) {
+		p->frame = 0;
+		p->contadorFrame = 0;
+
+	}
+
+
+	// Movimentação para a esquerda
 	if (al_key_down(&teclado, ALLEGRO_KEY_LEFT) && p->ativo == true) {
 		p->xi -= p->velocidade;
 		p->xf -= p->velocidade;
 		p->virou = true;
+		p->andando = true;
+
+		p->contadorFrame++;
+
+		if (p->contadorFrame >= 5) {
+			p->frame++;
+			p->contadorFrame = 0;
+		}
 	}
 
 	// Movimentação para a direita
-	if (al_key_down(&teclado, ALLEGRO_KEY_RIGHT) && p->ativo == true) {
+	else if (al_key_down(&teclado, ALLEGRO_KEY_RIGHT) && p->ativo == true) {
 		p->xi += p->velocidade;
 		p->xf += p->velocidade;
 		p->virou = false;
+		p->andando = true;
+
+		p->contadorFrame++;
+
+		if (p->contadorFrame >= 5) {
+			p->frame++;
+			p->contadorFrame = 0;
+		}
+	}
+	else {
+		p->andando = false;
+	}
+
+	// Limita os frames
+	if (p->frame >= 12) {
+		p->frame = 0;
 	}
 	// Impede que o personagem saia da tela
 	if (p->xi < 0) {
@@ -325,7 +360,12 @@ int main() {
 	//variaveis	
 	ALLEGRO_BITMAP* menuImg = al_load_bitmap("Imagens/MenuImagem.png");
 	ALLEGRO_BITMAP* personagemImg = al_load_bitmap("Imagens/skeleton-walk.png");
-	Personagem principal = { 400.0f, 450.0f, 320.0f, 400.0f, 0.03f, 0.0f, true, false, true, false,1 ,30 };
+	//dimensões do personagem
+	float largura_total = al_get_bitmap_width(personagemImg);
+	float altura_total = al_get_bitmap_height(personagemImg);
+	float largura_frame = largura_total / 12; // 12 frames na horizontal	
+
+	Personagem principal = { 320.0f, 450.0f, 300.0f, 500.0f, 0.03f, 0.0f, true, false, true, false, false, 1, 30, 0, 0};
 	float balaX = 0.0f;
 	float balaY = 0.0f;
 	bool balaAtiva = false;
@@ -345,8 +385,8 @@ int main() {
 
 	//registro de eventos
 	al_register_event_source(filaEventos, al_get_display_event_source(display));
-	al_register_event_source(filaEventos, al_get_keyboard_event_source());
-	al_register_event_source(filaEventos, al_get_mouse_event_source());
+	//al_register_event_source(filaEventos, al_get_keyboard_event_source());
+	//al_register_event_source(filaEventos, al_get_mouse_event_source());
 	al_register_event_source(filaEventos, al_get_timer_event_source(timer));
 	al_start_timer(timer);
 
@@ -397,13 +437,16 @@ int main() {
 				if (al_mouse_button_down(&mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse.x >= 340 && mouse.x <= 520 && mouse.y >= 259 && mouse.y <= 299) {
 					principal.vida = 30;
 					principal.ativo = true;
-					principal.xi = 400;
-					principal.xf = 450;
-					principal.yi = 320;
-					principal.yf = 400;
+					principal.xi = 320.0f;
+					principal.xf = 450.0f;
+					principal.yi = 300.0f;
+					principal.yf = 500.0f;
 					principal.noChao = true;
 					principal.noAr = false;
 					principal.virou = false;
+					principal.andando = false;
+					principal.frame = 0;
+					principal.contadorFrame = 0;
 
 					waves = 0;
 					aguardandoWave = false;
@@ -477,11 +520,35 @@ int main() {
 				// texto da vida do personagem
 				al_draw_textf(fonte, al_map_rgb(255, 255, 255), 10, 10, 0, "Vida: %d", principal.vida);
 
+				/*
+				if (personagemImg == NULL) {
+					printf("Erro ao carregar sprite!\n");
+				}
+				else {
+					printf("Sprite carregada: %d x %d\n",
+						al_get_bitmap_width(personagemImg),
+						al_get_bitmap_height(personagemImg));
+				}
+				*/
 				
 				if (principal.vida > 0) {
 					principal.ativo = true;
-				//	al_draw_filled_rectangle(principal.xi, principal.yi, principal.xf, principal.yf, al_map_rgb(255, 0, 0));//personagem
-					al_draw_bitmap_region(personagemImg, 0, 0, 30, 30, 50, 80, 0);
+
+					int total_colunas = 12;
+					int largura_frame = 2170 / total_colunas; // ~180 pixels
+					int altura_frame = 500;
+
+					// Usamos al_draw_scaled_bitmap para pegar APENAS O PRIMEIRO FRAME 
+					// e redimensioná-lo para caber exatamente no tamanho do seu personagem (xi, yi até xf, yf)
+					al_draw_scaled_bitmap(
+						personagemImg,
+						principal.frame* largura_frame, 0,
+						largura_frame, altura_frame,
+						principal.xi, principal.yi,
+						principal.xf - principal.xi,
+						principal.yf - principal.yi,
+						principal.virou ? ALLEGRO_FLIP_HORIZONTAL : 0
+					);
 				}
 				else {
 					principal.ativo = false;
