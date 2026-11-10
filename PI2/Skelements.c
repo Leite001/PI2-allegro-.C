@@ -36,8 +36,10 @@ typedef struct {
 	bool andando;
 	int dano;
 	int vida;
-	int frame;
-	int contadorFrame;
+	int frameWalk;
+	int contadorFrameWalk;
+	int framePulo;
+	int contadorFramePulo;
 }Personagem;
 
 void movimentacao(Personagem* p, int largura_tela) {
@@ -53,8 +55,8 @@ void movimentacao(Personagem* p, int largura_tela) {
 
 //idle - parado
 	if (p->andando == false) {
-		p->frame = 0;
-		p->contadorFrame = 0;
+		p->frameWalk = 0;
+		p->contadorFrameWalk = 0;
 
 	}
 
@@ -66,11 +68,11 @@ void movimentacao(Personagem* p, int largura_tela) {
 		p->virou = true;
 		p->andando = true;
 
-		p->contadorFrame++;
+		p->contadorFrameWalk++;
 
-		if (p->contadorFrame >= 5) {
-			p->frame++;
-			p->contadorFrame = 0;
+		if (p->contadorFrameWalk >= 5) {
+			p->frameWalk++;
+			p->contadorFrameWalk = 0;
 		}
 	}
 
@@ -81,11 +83,11 @@ void movimentacao(Personagem* p, int largura_tela) {
 		p->virou = false;
 		p->andando = true;
 
-		p->contadorFrame++;
+		p->contadorFrameWalk++;
 
-		if (p->contadorFrame >= 5) {
-			p->frame++;
-			p->contadorFrame = 0;
+		if (p->contadorFrameWalk >= 5) {
+			p->frameWalk++;
+			p->contadorFrameWalk = 0;
 		}
 	}
 	else {
@@ -93,8 +95,8 @@ void movimentacao(Personagem* p, int largura_tela) {
 	}
 
 	// Limita os frames
-	if (p->frame >= 12) {
-		p->frame = 0;
+	if (p->frameWalk >= 12) {
+		p->frameWalk = 0;
 	}
 	// Impede que o personagem saia da tela
 	if (p->xi < 0) {
@@ -108,9 +110,23 @@ void movimentacao(Personagem* p, int largura_tela) {
 	}
 
 	// Pulo
-	if (al_key_down(&teclado, ALLEGRO_KEY_UP) && p->noChao == true && p->ativo == true && p->noAr == false) {
-		p->velocidadePulo = -6.0f;
-		p->noChao = false;
+	// Animação do pulo
+	if (p->noAr == true) {
+
+		p->contadorFramePulo++;
+
+		if (p->contadorFramePulo >= 5) {
+			p->framePulo++;
+			p->contadorFramePulo = 0;
+		}
+
+		if (p->framePulo >= 4) {
+			p->framePulo = 0;
+		}
+	}
+	else {
+		p->framePulo = 0;
+		p->contadorFramePulo = 0;
 	}
 
 	p->velocidadePulo += gravidade;
@@ -360,12 +376,14 @@ int main() {
 	//variaveis	
 	ALLEGRO_BITMAP* menuImg = al_load_bitmap("Imagens/MenuImagem.png");
 	ALLEGRO_BITMAP* personagemImg = al_load_bitmap("Imagens/skeleton-walk.png");
-	//dimensões do personagem
+	ALLEGRO_BITMAP* personagemJump = al_load_bitmap("Imagens/jump-skeleton.png");
+
+	//dimensões do personagem walk
 	float largura_total = al_get_bitmap_width(personagemImg);
 	float altura_total = al_get_bitmap_height(personagemImg);
 	float largura_frame = largura_total / 12; // 12 frames na horizontal	
 
-	Personagem principal = { 320.0f, 450.0f, 300.0f, 500.0f, 0.03f, 0.0f, true, false, true, false, false, 1, 30, 0, 0};
+	Personagem principal = { 320.0f, 450.0f, 300.0f, 500.0f, 0.03f, 0.0f, true, false, true, false, false, 1, 30, 0, 0,0,0};
 	float balaX = 0.0f;
 	float balaY = 0.0f;
 	bool balaAtiva = false;
@@ -445,8 +463,10 @@ int main() {
 					principal.noAr = false;
 					principal.virou = false;
 					principal.andando = false;
-					principal.frame = 0;
-					principal.contadorFrame = 0;
+					principal.frameWalk = 0;
+					principal.contadorFrameWalk = 0;
+					principal.framePulo = 0;
+					principal.contadorFramePulo = 0;
 
 					waves = 0;
 					aguardandoWave = false;
@@ -519,37 +539,55 @@ int main() {
 				al_draw_textf(fonte, al_map_rgb(255, 255, 255), 10, 40, 0, "Wave: %d", waves);
 				// texto da vida do personagem
 				al_draw_textf(fonte, al_map_rgb(255, 255, 255), 10, 10, 0, "Vida: %d", principal.vida);
-
-				/*
-				if (personagemImg == NULL) {
-					printf("Erro ao carregar sprite!\n");
-				}
-				else {
-					printf("Sprite carregada: %d x %d\n",
-						al_get_bitmap_width(personagemImg),
-						al_get_bitmap_height(personagemImg));
-				}
-				*/
 				
 				if (principal.vida > 0) {
 					principal.ativo = true;
 
-					int total_colunas = 12;
-					int largura_frame = 2170 / total_colunas; // ~180 pixels
+					int total_colunasW = 12;
+					int total_colunasJ = 4;
+					int largura_frameJ = 1781 / total_colunasJ; // ~445 pixels
+					int largura_frame = 2170 / total_colunasW; // ~180 pixels
 					int altura_frame = 500;
 
 					// Usamos al_draw_scaled_bitmap para pegar APENAS O PRIMEIRO FRAME 
 					// e redimensioná-lo para caber exatamente no tamanho do seu personagem (xi, yi até xf, yf)
-					al_draw_scaled_bitmap(
-						personagemImg,
-						principal.frame* largura_frame, 0,
-						largura_frame, altura_frame,
-						principal.xi, principal.yi,
-						principal.xf - principal.xi,
-						principal.yf - principal.yi,
-						principal.virou ? ALLEGRO_FLIP_HORIZONTAL : 0
-					);
-				}
+					if (principal.vida > 0) {
+
+						principal.ativo = true;
+
+						if (principal.noAr == true) {
+
+							int totalFramesPulo = 4;
+							int larguraFramePulo = al_get_bitmap_width(personagemJump) / totalFramesPulo;
+							int alturaFramePulo = al_get_bitmap_height(personagemJump);
+
+							al_draw_scaled_bitmap(
+								personagemJump,
+								principal.framePulo * larguraFramePulo, 0,
+								larguraFramePulo, alturaFramePulo,
+								principal.xi, principal.yi,
+								principal.xf - principal.xi,
+								principal.yf - principal.yi,
+								principal.virou ? ALLEGRO_FLIP_HORIZONTAL : 0
+							);
+						}
+						else {
+
+							int total_colunas = 12;
+							int largura_frame = 2170 / total_colunas;
+							int altura_frame = 500;
+
+							al_draw_scaled_bitmap(
+								personagemImg,
+								principal.frameWalk * largura_frame, 0,
+								largura_frame, altura_frame,
+								principal.xi, principal.yi,
+								principal.xf - principal.xi,
+								principal.yf - principal.yi,
+								principal.virou ? ALLEGRO_FLIP_HORIZONTAL : 0
+							);
+						}
+					}
 				else {
 					principal.ativo = false;
 				}
