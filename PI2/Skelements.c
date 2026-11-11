@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include<allegro5/allegro_image.h>
-//#include "LaboratorioJOGO.h"
+#include "LaboratorioJOGO.h"
 
 typedef struct {
 	float x;
@@ -228,16 +228,18 @@ void  projetil(float* balaX, float* balaY, bool* balaAtiva, float xi, float xf, 
 	}
 
 	//desenhando a bala de acordo com a cor
-	if (!*balaVirou) {
 
-		al_draw_filled_rectangle(*balaX, *balaY - 5, *balaX + 20, *balaY + 5, cor);
+	if (*balaAtiva == true && ativoP == true) {
+		if (!*balaVirou) {
 
+			al_draw_filled_rectangle(*balaX, *balaY - 5, *balaX + 20, *balaY + 5, cor);
+
+		}
+		else {
+			al_draw_filled_rectangle(*balaX - 20, *balaY - 5, *balaX, *balaY + 5, cor);
+
+		}
 	}
-	else {
-		al_draw_filled_rectangle(*balaX - 20, *balaY - 5, *balaX, *balaY + 5, cor);
-
-	}
-
 	// Desativa a bala quando sair da tela
 	if (*balaX > largura_tela) {
 		*balaAtiva = false;
@@ -367,6 +369,8 @@ void sistemaWave(int* waves, bool* aguardandoWave, double* tempoProximaWave, ini
 	int inimigosVivos = 0;
 
 	int quantidadeInimigos = 3 + (*waves - 1) / 5;
+	int inimigosEsquerda = 0;
+	int inimigosDireita = 0;
 
 	if (quantidadeInimigos > 20) {
 		quantidadeInimigos = 20;
@@ -398,6 +402,8 @@ void sistemaWave(int* waves, bool* aguardandoWave, double* tempoProximaWave, ini
 			inimigo[i].raio = 30;
 			inimigo[i].dano = 5;
 
+			inimigo[i].cor = i % 3;
+
 			if (i % 3 == 0) inimigo[i].velocidade = 1.5f;
 			if (i % 3 == 1) inimigo[i].velocidade = 1.0f;
 			if (i % 3 == 2) inimigo[i].velocidade = 2.5f;
@@ -405,10 +411,12 @@ void sistemaWave(int* waves, bool* aguardandoWave, double* tempoProximaWave, ini
 			inimigo[i].y = 370;
 
 			if (rand() % 2 == 0) {
-				inimigo[i].x = -inimigo[i].raio;
+				inimigo[i].x = -inimigo[i].raio -inimigosEsquerda * 65;
+				inimigosEsquerda++;
 			}
 			else {
-				inimigo[i].x = largura_tela + inimigo[i].raio;
+				inimigo[i].x = largura_tela + inimigo[i].raio + inimigosDireita * 65;
+				inimigosDireita++;
 			}
 		}
 
@@ -611,10 +619,11 @@ int main() {
 				//
 
 				// texto da wave
-				al_draw_textf(fonte, al_map_rgb(255, 0, 0), largura_tela / 2 - 50, 10, 0, "Wave: %d", waves);
+				al_draw_textf(fonte, al_map_rgb(255, 0, 0), largura_tela / 2 - 50, 20, 0, "Wave: %d", waves);
 				// texto da vida do personagem
 				al_draw_textf(fonte, al_map_rgb(255, 255, 255), 10, 10, 0, "Vida: %d", principal.vida);
 				al_draw_textf(fonte, al_map_rgb(255, 255, 255), 10, 40, 0, "Pontos: %d", pontos);
+				al_draw_textf(fonte, al_map_rgb(255, 255, 255), largura_tela/2 - 50, altura_tela - 30, 0, "Record: %d", record);
 
 				if (principal.vida > 0) {
 					principal.ativo = true;
@@ -653,10 +662,10 @@ int main() {
 				//inimigos
 				for (int i = 0; i < quantidadeInimigos; i++) {
 					if (inimigo[i].vida > 0 && inimigo[i].ativo == true) {
-						if (i % 3 == 0) {
+						if (inimigo[i].cor == 0) {
 							al_draw_filled_circle(inimigo[i].x, inimigo[i].y, inimigo[i].raio, al_map_rgb(0, 0, 255));
 						}
-						else if (i % 3 == 1) {
+						else if (inimigo[i].cor == 1) {
 							al_draw_filled_circle(inimigo[i].x, inimigo[i].y, inimigo[i].raio, al_map_rgb(255, 255, 255));
 						}
 						else {
