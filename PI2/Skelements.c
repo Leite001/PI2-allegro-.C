@@ -693,9 +693,9 @@ int main() {
 				ALLEGRO_MOUSE_STATE mouse;
 				al_get_mouse_state(&mouse);
 
-				//laboratorio_atualizar(&mouse, &menu, &laboratorio, &jogo);
+				laboratorio_atualizar(&mouse, &menu, &laboratorio, &jogo);
 
-				//laboratorio_desenhar(fonte, largura_tela, altura_tela);
+				laboratorio_desenhar(fonte, largura_tela, altura_tela);
 			}
 
 		}
