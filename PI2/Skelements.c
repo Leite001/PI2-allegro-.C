@@ -343,9 +343,9 @@ void colisaoPrincipal(Personagem* p, inimigo* inimigo) {
 
 		// Empurra o inimigo para fora do personagem
 		if (inimigo->x < (p->xi + p->xf) / 2)
-			inimigo->x = p->xi - inimigo->raio;
+			inimigo->x = p->xi - inimigo->raio + 50;
 		else
-			inimigo->x = p->xf + inimigo->raio;
+			inimigo->x = p->xf + inimigo->raio + 50;
 	}
 }
 
@@ -444,7 +444,7 @@ int main() {
 	//
 
 	//variaveis	
-	ALLEGRO_BITMAP* menuImg = al_load_bitmap("Imagens/MenuImagem.png");
+	ALLEGRO_BITMAP* menuImg = al_load_bitmap("Imagens/MenuImagm.png");
 	ALLEGRO_BITMAP* personagemImg = al_load_bitmap("Imagens/skeleton-walk.png");
 	ALLEGRO_BITMAP* personagemJump = al_load_bitmap("Imagens/jump-skeleton.png");
 	ALLEGRO_BITMAP* chaoImg = al_load_bitmap("Imagens/chao.png");
@@ -696,6 +696,8 @@ int main() {
 				laboratorio_atualizar(&mouse, &menu, &laboratorio, &jogo);
 
 				laboratorio_desenhar(fonte, largura_tela, altura_tela);
+
+				laboratorioJogo();
 			}
 
 		}

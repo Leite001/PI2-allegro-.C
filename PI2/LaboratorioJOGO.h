@@ -9,4 +9,6 @@ void laboratorio_atualizar(ALLEGRO_MOUSE_STATE* mouse, bool* menu, bool* laborat
 
 void laboratorio_desenhar( ALLEGRO_FONT* fonte, int largura_tela, int altura_tela);
 
+int laboratorioJogo();
+
 #endif
