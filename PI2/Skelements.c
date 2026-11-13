@@ -43,6 +43,7 @@ typedef struct {
 	int contadorFramePulo;
 }Personagem;
 
+
 void recordPontos(Personagem p, int pontos, int* record) {
 
 	if (p.ativo == false && pontos > *record) {
@@ -424,6 +425,55 @@ void sistemaWave(int* waves, bool* aguardandoWave, double* tempoProximaWave, ini
 	}
 }
 
+//funcão laboratorioJogo
+void selectionElemento(Elementos elementos[], ALLEGRO_MOUSE_STATE* mouse) {
+
+
+	if (al_mouse_button_down(mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse->x >= 380 && mouse->x <= 400 && mouse->y >= 87 && mouse->y <= 107) {
+		elementos[0].escolhido = 1; // Lógica para o primeiro bloco
+		// oxigenio clicado
+	}
+	else {
+		elementos[0].escolhido = 0;
+	}
+
+
+	if (al_mouse_button_down(mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse->x >= 38 && mouse->x <= 60 && mouse->y >= 65 && mouse->y <= 85) {
+
+		elementos[1].escolhido = 1; // Lógica para o primeiro bloco
+		// hidrogenio clicado
+	}
+	else {
+		elementos[1].escolhido = 0;
+	}
+	if (al_mouse_button_down(mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse->x >= 198 && mouse->x <= 218 && mouse->y >= 130 && mouse->y <= 150) {
+
+		elementos[2].escolhido = 1; // Lógica para o primeiro bloco
+		// Ferro clicado
+	}
+	else {
+		elementos[2].escolhido = 0;
+	}
+	if (al_mouse_button_down(mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse->x >= 335 && mouse->x <= 355 && mouse->y >= 87 && mouse->y <= 107) {
+
+		elementos[3].escolhido = 1; // Lógica para o primeiro bloco
+		// Carbono clicado
+	}
+	else {
+		elementos[3].escolhido = 0;
+	}
+	if (al_mouse_button_down(mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse->x >= 380 && mouse->x <= 400 && mouse->y >= 109 && mouse->y <= 128) {
+
+		elementos[4].escolhido = 1; // Lógica para o primeiro bloco
+		// Enxofre clicado
+	}
+	else {
+		elementos[4].escolhido = 0;
+	}
+
+
+}
+
 int main() {
 	//inicializando allegro
 	al_init();
@@ -448,10 +498,11 @@ int main() {
 	ALLEGRO_BITMAP* personagemImg = al_load_bitmap("Imagens/skeleton-walk.png");
 	ALLEGRO_BITMAP* personagemJump = al_load_bitmap("Imagens/jump-skeleton.png");
 	ALLEGRO_BITMAP* chaoImg = al_load_bitmap("Imagens/chao.png");
+	ALLEGRO_BITMAP* laboratorioIMG = al_load_bitmap("Imagens/tabela_periodica.png");
 
 
 
-	if (menuImg == NULL || personagemImg == NULL || personagemJump == NULL || chaoImg == NULL) {
+	if (menuImg == NULL || personagemImg == NULL || personagemJump == NULL || chaoImg == NULL || laboratorioIMG == NULL) {
 		printf("Erro ao carregar imagens!\n");
 		return -1;
 	}
@@ -509,6 +560,17 @@ int main() {
 		}
 	}
 	//
+
+	//struct elementos char nome[50]; char simbolo[5]; int numeroAtomico; int massaAtomica; int escolhido;
+	//O,H,Fe,C,S
+	Elementos elementos[5] = {
+		{ "Oxigenio", "O", 8, 16, 0 },
+		{ "Hidrogenio", "H", 1, 1, 0 },
+		{ "Ferro", "Fe", 26, 55, 0 },
+		{ "Carbono", "C", 6, 12, 0 },
+		{ "Enxofre", "S", 16, 32, 0 }
+	};
+
 
 //jogo rodando
 	while (rodando) {
@@ -695,14 +757,21 @@ int main() {
 
 				laboratorio_atualizar(&mouse, &menu, &laboratorio, &jogo);
 
-				laboratorio_desenhar(fonte, largura_tela, altura_tela);
+				selectionElemento(elementos, &mouse);
 
-				laboratorioJogo();
+				
+
+				laboratorio_desenhar(fonte, largura_tela, altura_tela, laboratorioIMG, &elementos);
+
+
+
+	
 			}
 
 		}
 		al_flip_display();
 	}
+	al_destroy_bitmap(laboratorioIMG);
 	al_destroy_bitmap(chaoImg);
 	al_destroy_bitmap(personagemImg);
 	al_destroy_event_queue(filaEventos);
