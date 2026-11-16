@@ -426,52 +426,31 @@ void sistemaWave(int* waves, bool* aguardandoWave, double* tempoProximaWave, ini
 }
 
 //funcão laboratorioJogo
-void selectionElemento(Elementos elementos[], ALLEGRO_MOUSE_STATE* mouse) {
+void selectionElemento(Elementos elementos[], ALLEGRO_MOUSE_STATE* mouse, int *bloco1, int *bloco2, bool *mouseAnterior) {
 
+	bool clicando = al_mouse_button_down(mouse, ALLEGRO_MOUSE_BUTTON_LEFT);
 
-	if (al_mouse_button_down(mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse->x >= 380 && mouse->x <= 400 && mouse->y >= 87 && mouse->y <= 107) {
-		elementos[0].escolhido = 1; // Lógica para o primeiro bloco
-		// oxigenio clicado
-	}
-	else {
-		elementos[0].escolhido = 0;
-	}
+	if (clicando && !*mouseAnterior) {
 
+		for (int i = 0; i < 5; i++) {
 
-	if (al_mouse_button_down(mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse->x >= 38 && mouse->x <= 60 && mouse->y >= 65 && mouse->y <= 85) {
+			if (mouse->x >= elementos[i].xi && mouse->x <= elementos[i].xf && mouse->y >= elementos[i].yi && mouse->y <= elementos[i].yf) {
 
-		elementos[1].escolhido = 1; // Lógica para o primeiro bloco
-		// hidrogenio clicado
-	}
-	else {
-		elementos[1].escolhido = 0;
-	}
-	if (al_mouse_button_down(mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse->x >= 198 && mouse->x <= 218 && mouse->y >= 130 && mouse->y <= 150) {
+				if (*bloco1 == -1) {
+					*bloco1 = i;
+				}
+				else if (*bloco2 == -1) {
+					*bloco2 = i;
+				}
+				else {
+					*bloco2 = i;
+				}
 
-		elementos[2].escolhido = 1; // Lógica para o primeiro bloco
-		// Ferro clicado
+				break;
+			}
+		}
 	}
-	else {
-		elementos[2].escolhido = 0;
-	}
-	if (al_mouse_button_down(mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse->x >= 335 && mouse->x <= 355 && mouse->y >= 87 && mouse->y <= 107) {
-
-		elementos[3].escolhido = 1; // Lógica para o primeiro bloco
-		// Carbono clicado
-	}
-	else {
-		elementos[3].escolhido = 0;
-	}
-	if (al_mouse_button_down(mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse->x >= 380 && mouse->x <= 400 && mouse->y >= 109 && mouse->y <= 128) {
-
-		elementos[4].escolhido = 1; // Lógica para o primeiro bloco
-		// Enxofre clicado
-	}
-	else {
-		elementos[4].escolhido = 0;
-	}
-
-
+	*mouseAnterior = clicando;
 }
 
 int main() {
@@ -526,6 +505,8 @@ int main() {
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60.0);
 	int pontos = 0;
 	int record = 0;
+	int bloco1 = -1;
+	int bloco2 = -1;
 	//50 e 80
 	//
 
@@ -564,11 +545,11 @@ int main() {
 	//struct elementos char nome[50]; char simbolo[5]; int numeroAtomico; int massaAtomica; int escolhido;
 	//O,H,Fe,C,S
 	Elementos elementos[5] = {
-		{ "Oxigenio", "O", 8, 16, 0 },
-		{ "Hidrogenio", "H", 1, 1, 0 },
-		{ "Ferro", "Fe", 26, 55, 0 },
-		{ "Carbono", "C", 6, 12, 0 },
-		{ "Enxofre", "S", 16, 32, 0 }
+		{ "Oxigenio", "O", 8, 16, 0, 380, 400, 87, 107},
+		{ "Hidrogenio", "H", 1, 1, 0, 38, 60, 65, 85},
+		{ "Ferro", "Fe", 26, 55, 0, 198, 218, 130, 150 },
+		{ "Carbono", "C", 6, 12, 0, 335, 355, 87, 107},
+		{ "Enxofre", "S", 16, 32, 0, 380, 400, 109, 128}
 	};
 
 
@@ -757,11 +738,11 @@ int main() {
 
 				laboratorio_atualizar(&mouse, &menu, &laboratorio, &jogo);
 
-				selectionElemento(elementos, &mouse);
+				selectionElemento(elementos, &mouse, &bloco1, &bloco2, &mouseAnterior);
 
 				
 
-				laboratorio_desenhar(fonte, largura_tela, altura_tela, laboratorioIMG, &elementos);
+				laboratorio_desenhar(fonte, largura_tela, altura_tela, laboratorioIMG, &elementos, bloco1, bloco2);
 
 
 

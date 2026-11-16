@@ -30,6 +30,7 @@ void laboratorio_atualizar(
         *laboratorio = false;
         *jogo = false;
     }
+
 }
 
 
@@ -38,10 +39,10 @@ void laboratorio_desenhar(
     ALLEGRO_FONT* fonte,
     int largura_tela,
     int altura_tela,
-    ALLEGRO_BITMAP* laboratorioIMG, Elementos e[])
+    ALLEGRO_BITMAP* laboratorioIMG, Elementos e[], int bloco1, int bloco2)
 {
 
-   
+
 
 
     al_clear_to_color(al_map_rgb(9, 9, 48));
@@ -50,9 +51,9 @@ void laboratorio_desenhar(
 
     // Desenhos do laboratório
     al_draw_scaled_bitmap(laboratorioIMG, 0, 0, 500, 333, 10, 5, 467, 300, 0);
-    
+
     al_draw_rectangle(10, 10, 150, 40,
-        al_map_rgb(255, 255, 255), 2);
+        al_map_rgb(255, 255, 255), 2,0);
 
     al_draw_textf(fonte, al_map_rgb(255, 255, 255),
         10, 10, 0, "Voltar <--");
@@ -61,27 +62,49 @@ void laboratorio_desenhar(
         largura_tela / 2 - 50, 10, 0, "LABORATORIO");
 
     al_draw_line(0, 50, largura_tela, 50,
-        al_map_rgb(255, 255, 255), 2);
+        al_map_rgb(255, 255, 255), 2,0);
     //blocos
-	al_draw_rectangle(500, 100, 600, 200, al_map_rgb(255, 255, 255), 2);
-    
+    al_draw_rectangle(500, 100, 600, 200, al_map_rgb(255, 255, 255), 2,0);
+    if (bloco1 != -1) {
+
+        Elementos* elemento = &e[bloco1];
+
+        ALLEGRO_BITMAP* elementoIMG = al_create_sub_bitmap(laboratorioIMG, elemento->xi + 20, elemento->yi + 5, elemento->xf - elemento->xi, elemento->yf - elemento->yi);
+
+        al_draw_scaled_bitmap(elementoIMG, 0, 0, elemento->xf - elemento->xi, elemento->yf - elemento->yi, 500, 100, 100, 100, 0);
+
+        al_destroy_bitmap(elementoIMG);
+    }
+
     //soma
-	al_draw_line(650, 150, 700, 150, al_map_rgb(255, 255, 255), 2);
-	al_draw_line(675, 125, 675, 175, al_map_rgb(255, 255, 255), 2);
+    al_draw_line(650, 150, 700, 150, al_map_rgb(255, 255, 255), 2,0);
+    al_draw_line(675, 125, 675, 175, al_map_rgb(255, 255, 255), 2,0);
 
     //outro bloco
-    al_draw_rectangle(750, 100, 850, 200, al_map_rgb(255, 255, 255), 2);
+    al_draw_rectangle(750, 100, 850, 200, al_map_rgb(255, 255, 255), 2,0);
+    if (bloco2 != -1) {
+
+        Elementos* elemento = &e[bloco2];
+
+        ALLEGRO_BITMAP* elementoIMG = al_create_sub_bitmap(laboratorioIMG, elemento->xi + 20, elemento->yi + 5, elemento->xf - elemento->xi, elemento->yf - elemento->yi);
+
+        al_draw_scaled_bitmap(elementoIMG, 0, 0, elemento->xf - elemento->xi, elemento->yf - elemento->yi, 750, 100, 100, 100, 0);
+
+        al_destroy_bitmap(elementoIMG);
+    }
 
     //reação
     al_draw_textf(fonte, al_map_rgb(255, 255, 255), 625, 220, 0, "REACAO");
-	al_draw_line(600, 220, 675, 300, al_map_rgb(255, 255, 255), 2);	
-    al_draw_line(675, 300, 750, 220, al_map_rgb(255, 255, 255), 2);
+    al_draw_line(600, 220, 675, 300, al_map_rgb(255, 255, 255), 2,0);
+    al_draw_line(675, 300, 750, 220, al_map_rgb(255, 255, 255), 2,0);
     //bloco reação
-	al_draw_rectangle(625, 320, 725, 420, al_map_rgb(255, 255, 255), 2);
+    al_draw_rectangle(625, 320, 725, 420, al_map_rgb(255, 255, 255), 2,0);
 
-	//Caracteristicas dos elementos
-
+    //Caracteristicas dos elementos
+    
     al_draw_text(fonte, al_map_rgb(255, 255, 255), 50, 300, 0, "A:");
+    
+    
     al_draw_text(fonte, al_map_rgb(255, 255, 255), 50, 330, 0, "Z:");
 
     for (int i = 0; i < 5; i++) {

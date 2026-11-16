@@ -1,2 +1,10 @@
 ﻿  LaboratorioJOGO.c
-  PI2.vcxproj -> C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\x64\Debug\PI2.exe
+C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\LaboratorioJOGO.c(56,38): error C2197: 'void al_draw_rectangle(float,float,float,float,ALLEGRO_COLOR,float)': muitos argumentos para chamada
+C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\LaboratorioJOGO.c(65,38): error C2197: 'void al_draw_line(float,float,float,float,ALLEGRO_COLOR,float)': muitos argumentos para chamada
+C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\LaboratorioJOGO.c(67,72): error C2197: 'void al_draw_rectangle(float,float,float,float,ALLEGRO_COLOR,float)': muitos argumentos para chamada
+C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\LaboratorioJOGO.c(80,67): error C2197: 'void al_draw_line(float,float,float,float,ALLEGRO_COLOR,float)': muitos argumentos para chamada
+C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\LaboratorioJOGO.c(81,67): error C2197: 'void al_draw_line(float,float,float,float,ALLEGRO_COLOR,float)': muitos argumentos para chamada
+C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\LaboratorioJOGO.c(84,72): error C2197: 'void al_draw_rectangle(float,float,float,float,ALLEGRO_COLOR,float)': muitos argumentos para chamada
+C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\LaboratorioJOGO.c(98,67): error C2197: 'void al_draw_line(float,float,float,float,ALLEGRO_COLOR,float)': muitos argumentos para chamada
+C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\LaboratorioJOGO.c(99,67): error C2197: 'void al_draw_line(float,float,float,float,ALLEGRO_COLOR,float)': muitos argumentos para chamada
+C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\LaboratorioJOGO.c(101,72): error C2197: 'void al_draw_rectangle(float,float,float,float,ALLEGRO_COLOR,float)': muitos argumentos para chamada
