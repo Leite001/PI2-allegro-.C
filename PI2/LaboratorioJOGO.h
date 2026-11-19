@@ -8,6 +8,7 @@
 typedef	struct {
 	char nome[50];
 	char simbolo[5];
+	int elementoID;
 	int numeroAtomico;
 	int massaAtomica;
 	int escolhido;
@@ -19,7 +20,7 @@ typedef	struct {
 
 void laboratorio_atualizar(ALLEGRO_MOUSE_STATE* mouse, bool* menu, bool* laboratorio, bool* jogo);
 
-void laboratorio_desenhar( ALLEGRO_FONT* fonte, int largura_tela, int altura_tela, ALLEGRO_BITMAP* laboratorioIMG, Elementos e[], int bloco1, int bloco2);
+void laboratorio_desenhar( ALLEGRO_FONT* fonte, int largura_tela, int altura_tela, ALLEGRO_BITMAP* laboratorioIMG, Elementos e[], int *bloco1, int *bloco2, ALLEGRO_MOUSE_STATE* mouse, ALLEGRO_BITMAP* elementoLeve, ALLEGRO_BITMAP* elementoPesado);
 
 
 

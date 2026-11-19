@@ -435,6 +435,13 @@ void selectionElemento(Elementos elementos[], ALLEGRO_MOUSE_STATE* mouse, int *b
 		for (int i = 0; i < 5; i++) {
 
 			if (mouse->x >= elementos[i].xi && mouse->x <= elementos[i].xf && mouse->y >= elementos[i].yi && mouse->y <= elementos[i].yf) {
+				
+				for (int j = 0; j < 5; j++) {
+					elementos[j].escolhido = 0;
+				}
+
+				elementos[i].escolhido = 1;
+
 
 				if (*bloco1 == -1) {
 					*bloco1 = i;
@@ -445,6 +452,8 @@ void selectionElemento(Elementos elementos[], ALLEGRO_MOUSE_STATE* mouse, int *b
 				else {
 					*bloco2 = i;
 				}
+
+
 
 				break;
 			}
@@ -478,6 +487,8 @@ int main() {
 	ALLEGRO_BITMAP* personagemJump = al_load_bitmap("Imagens/jump-skeleton.png");
 	ALLEGRO_BITMAP* chaoImg = al_load_bitmap("Imagens/chao.png");
 	ALLEGRO_BITMAP* laboratorioIMG = al_load_bitmap("Imagens/tabela_periodica.png");
+	ALLEGRO_BITMAP* elementoLeve = al_load_bitmap("Imagens/leaf(2).png");
+	ALLEGRO_BITMAP* elementoPesado = al_load_bitmap("Imagens/metal.png");
 
 
 
@@ -545,11 +556,11 @@ int main() {
 	//struct elementos char nome[50]; char simbolo[5]; int numeroAtomico; int massaAtomica; int escolhido;
 	//O,H,Fe,C,S
 	Elementos elementos[5] = {
-		{ "Oxigenio", "O", 8, 16, 0, 380, 400, 87, 107},
-		{ "Hidrogenio", "H", 1, 1, 0, 38, 60, 65, 85},
-		{ "Ferro", "Fe", 26, 55, 0, 198, 218, 130, 150 },
-		{ "Carbono", "C", 6, 12, 0, 335, 355, 87, 107},
-		{ "Enxofre", "S", 16, 32, 0, 380, 400, 109, 128}
+		{ "Oxigenio", "O", 0, 8, 16, 0, 380, 400, 87, 107},
+		{ "Hidrogenio", "H", 1, 1, 1, 0, 11, 32, 94, 117},
+		{ "Ferro", "Fe", 2, 26, 55, 0, 198, 218, 130, 150},
+		{ "Carbono", "C", 3, 6, 12, 0, 335, 355, 87, 107},
+		{ "Enxofre", "S", 4, 16, 32, 0, 380, 400, 109, 128}
 	};
 
 
@@ -573,6 +584,7 @@ int main() {
 				al_draw_rectangle(340, 259, 520, 299, al_map_rgb(255, 0, 0), 5);
 				al_draw_rectangle(340, 365, 520, 420, al_map_rgb(255, 0, 0), 5);
 				if (al_mouse_button_down(&mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse.x >= 340 && mouse.x <= 520 && mouse.y >= 259 && mouse.y <= 299) {
+					//reiniciando o personagem
 					principal.vida = 30;
 					principal.ativo = true;
 					principal.xi = 400;
@@ -587,18 +599,27 @@ int main() {
 					principal.contadorFrameWalk = 0;
 					principal.framePulo = 0;
 					principal.contadorFramePulo = 0;
-
+					//
+					//reiniciando waves
 					waves = 0;
 					aguardandoWave = false;
 					tempoProximaWave = 0;
-
+					//
 					balaAtiva = false;
 					balaVirou = false;
 					corBala = 2;
 					corProjetil = 2;
 
+					//reiniciando pontos
 					pontos = 0;
 
+					//reiniciando elementos
+					for (int i = 0; i < 5; i++) {
+						elementos[i].escolhido = 0;
+					}
+					int bloco1 = -1;
+					int bloco2 = -1;
+					//
 					for (int i = 0; i < 20; i++) {
 						inimigo[i].vida = 0;
 						inimigo[i].ativo = false;
@@ -742,7 +763,7 @@ int main() {
 
 				
 
-				laboratorio_desenhar(fonte, largura_tela, altura_tela, laboratorioIMG, &elementos, bloco1, bloco2);
+				laboratorio_desenhar(fonte, largura_tela, altura_tela, laboratorioIMG, &elementos, &bloco1, &bloco2, &mouse, elementoLeve, elementoPesado);
 
 
 
@@ -752,6 +773,9 @@ int main() {
 		}
 		al_flip_display();
 	}
+
+	al_destroy_bitmap(elementoLeve);
+	al_destroy_bitmap(elementoPesado);
 	al_destroy_bitmap(laboratorioIMG);
 	al_destroy_bitmap(chaoImg);
 	al_destroy_bitmap(personagemImg);
