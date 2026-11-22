@@ -164,7 +164,7 @@ void movimentacao(Personagem* p, int largura_tela) {
 	}
 }
 
-void  projetil(float* balaX, float* balaY, bool* balaAtiva, float xi, float xf, float yi, float yf, int largura_tela, bool* mouseAnterior, bool* virou, bool* balaVirou, int* corBala, int* corProjetil, bool ativoP) {
+void  projetil(float* balaX, float* balaY, bool* balaAtiva, float xi, float xf, float yi, float yf, int largura_tela, bool* mouseAnterior, bool* virou, bool* balaVirou, int* corBala, int* corProjetil, bool ativoP, int mistura) {
 
 	ALLEGRO_MOUSE_STATE mouse;
 	al_get_mouse_state(&mouse);
@@ -177,17 +177,25 @@ void  projetil(float* balaX, float* balaY, bool* balaAtiva, float xi, float xf, 
 	float velobala = 8.0f;
 
 	//mudar a cor da bala com as teclas E, R e Q
-	if (al_key_down(&teclado, ALLEGRO_KEY_E)) {
-		*corBala = 2; // amarelo
+	if (mistura == 0) {
+		if (al_key_down(&teclado, ALLEGRO_KEY_E)) {
+			//al_draw_rectangle(160,400,260,460,al_map_rgb(255, 255, 0),2);
+			*corBala = 2; // amarelo
+		}
 	}
-	else if (al_key_down(&teclado, ALLEGRO_KEY_R)) {
-		*corBala = 0; // azul
+	else if (mistura == 1) {
+		if (al_key_down(&teclado, ALLEGRO_KEY_Q)) {
+			//al_draw_rectangle(160, 400, 260, 460, al_map_rgb(255, 255, 255), 2);
+			*corBala = 1; // branco	
+		}
 	}
-	else if (al_key_down(&teclado, ALLEGRO_KEY_Q)) {
-		*corBala = 1; // branco	
+	else if(mistura == 2){
+		if (al_key_down(&teclado, ALLEGRO_KEY_R)) {
+			//al_draw_rectangle(160, 400, 260, 460, al_map_rgb(0, 0, 255), 2);
+			*corBala = 0; // azul
+		}
 	}
-
-
+	
 
 	// Detecta um novo clique
 	if (mouseAtual && !*mouseAnterior && !*balaAtiva && ativoP == true) {
@@ -489,10 +497,12 @@ int main() {
 	ALLEGRO_BITMAP* laboratorioIMG = al_load_bitmap("Imagens/tabela_periodica.png");
 	ALLEGRO_BITMAP* elementoLeve = al_load_bitmap("Imagens/leaf(2).png");
 	ALLEGRO_BITMAP* elementoPesado = al_load_bitmap("Imagens/metal.png");
+	ALLEGRO_BITMAP* receita = al_load_bitmap("Imagens/book.png");
+	
 
 
 
-	if (menuImg == NULL || personagemImg == NULL || personagemJump == NULL || chaoImg == NULL || laboratorioIMG == NULL) {
+	if (menuImg == NULL || personagemImg == NULL || personagemJump == NULL || chaoImg == NULL || laboratorioIMG == NULL || elementoLeve == NULL || elementoPesado == NULL || receita == NULL) {
 		printf("Erro ao carregar imagens!\n");
 		return -1;
 	}
@@ -509,7 +519,11 @@ int main() {
 	bool menu = true;
 	bool laboratorio = false;
 	bool jogo = false;
+	bool prontoPJogo = false;
 	bool rodando = true;
+	bool receitaV = false;
+	int misturas = 0;
+	int misturaFeita = 0;
 	int corBala = 2;       // cor selecionada
 	int corProjetil = 2;   // cor da bala disparada
 	ALLEGRO_EVENT_QUEUE* filaEventos = al_create_event_queue();
@@ -518,6 +532,7 @@ int main() {
 	int record = 0;
 	int bloco1 = -1;
 	int bloco2 = -1;
+	
 	//50 e 80
 	//
 
@@ -557,8 +572,8 @@ int main() {
 	//O,H,Fe,C,S
 	Elementos elementos[5] = {
 		{ "Oxigenio", "O", 0, 8, 16, 0, 380, 400, 87, 107},
-		{ "Hidrogenio", "H", 1, 1, 1, 0, 11, 32, 94, 117},
-		{ "Ferro", "Fe", 2, 26, 55, 0, 198, 218, 130, 150},
+		{ "Hidrogenio", "H", 1, 1, 1, 0, 30, 60, 55, 85},
+		{ "Ferro", "Fe", 2, 26, 55, 0, 185, 205, 135, 155},
 		{ "Carbono", "C", 3, 6, 12, 0, 335, 355, 87, 107},
 		{ "Enxofre", "S", 4, 16, 32, 0, 380, 400, 109, 128}
 	};
@@ -581,9 +596,14 @@ int main() {
 			{
 				al_clear_to_color(al_map_rgb(0, 0, 0));
 				al_draw_scaled_bitmap(menuImg, 0, 0, al_get_bitmap_width(menuImg), al_get_bitmap_height(menuImg), 0, 0, largura_tela, altura_tela, 0);
-				al_draw_rectangle(340, 259, 520, 299, al_map_rgb(255, 0, 0), 5);
-				al_draw_rectangle(340, 365, 520, 420, al_map_rgb(255, 0, 0), 5);
-				if (al_mouse_button_down(&mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse.x >= 340 && mouse.x <= 520 && mouse.y >= 259 && mouse.y <= 299) {
+				//al_draw_rectangle(340, 259, 520, 299, al_map_rgb(255, 0, 0), 5);
+				//al_draw_rectangle(340, 365, 520, 420, al_map_rgb(255, 0, 0), 5);
+
+				if (prontoPJogo == false) {
+					al_draw_textf(fonte, al_map_rgb(255, 0, 0), 340, 265, 0, "-----------------------");
+				}
+
+				if (prontoPJogo == true  && al_mouse_button_down(&mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse.x >= 340 && mouse.x <= 520 && mouse.y >= 259 && mouse.y <= 299) {
 					//reiniciando o personagem
 					principal.vida = 30;
 					principal.ativo = true;
@@ -599,6 +619,7 @@ int main() {
 					principal.contadorFrameWalk = 0;
 					principal.framePulo = 0;
 					principal.contadorFramePulo = 0;
+
 					//
 					//reiniciando waves
 					waves = 0;
@@ -617,8 +638,8 @@ int main() {
 					for (int i = 0; i < 5; i++) {
 						elementos[i].escolhido = 0;
 					}
-					int bloco1 = -1;
-					int bloco2 = -1;
+					bloco1 = -1;
+					bloco2 = -1;
 					//
 					for (int i = 0; i < 20; i++) {
 						inimigo[i].vida = 0;
@@ -635,18 +656,21 @@ int main() {
 						}
 					}
 
+
+
 					menu = false;
 					laboratorio = false;
 					jogo = true;
 				}
-				else if (al_mouse_button_down(&mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse.x >= 340 && mouse.x <= 520 && mouse.y >= 365 && mouse.y <= 420) {
+
+				if (al_mouse_button_down(&mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse.x >= 340 && mouse.x <= 520 && mouse.y >= 365 && mouse.y <= 420) {
 					laboratorio = true;
 					jogo = false;
 					menu = false;
 
 				}
 			}
-			else if (menu == false && jogo == true && laboratorio == false)// jogo rodando
+			else if (menu == false && jogo == true && laboratorio == false && prontoPJogo == true)// jogo rodando
 			{
 
 				//chamando a função
@@ -678,6 +702,9 @@ int main() {
 
 				//desenhos apos al_clear_to_color
 				al_clear_to_color(al_map_rgb(194, 191, 29));
+
+
+
 				//fundo do jogo
 				al_draw_scaled_bitmap(chaoImg, 0, 0, al_get_bitmap_width(chaoImg), al_get_bitmap_height(chaoImg), 0, 0, largura_tela, altura_tela, 0);
 				//
@@ -717,10 +744,18 @@ int main() {
 				}
 
 				//função projetil float *balaX, float *balaY, bool *balaAtiva, float xf, float yi, float yf, int largura_tela, bool *mouseAnterior, bool *mouseAtual
-				projetil(&balaX, &balaY, &balaAtiva, principal.xi, principal.xf, principal.yi, principal.yf, largura_tela, &mouseAnterior, &principal.virou, &balaVirou, &corBala, &corProjetil, principal.ativo);
+				projetil(&balaX, &balaY, &balaAtiva, principal.xi, principal.xf, principal.yi, principal.yf, largura_tela, &mouseAnterior, &principal.virou, &balaVirou, &corBala, &corProjetil, principal.ativo, misturas);
 
 				for (int i = 0; i < quantidadeInimigos; i++) {
 					colisaoBala(&balaX, &balaY, &balaAtiva, &balaVirou, &corProjetil, &inimigo[i], &pontos);
+				}
+
+				if (pontos >= 1000) {
+					misturas++;
+
+				}
+				if (pontos >= 2000) {
+					misturas++;
 				}
 
 				//inimigos
@@ -749,6 +784,38 @@ int main() {
 
 					}
 				}
+				//escolha de elemento
+				if (misturaFeita == 1) {
+					al_draw_scaled_bitmap(elementoLeve, 46, 50, 159, 155, 180, 410, 50, 50, 0);
+
+				}
+				if (misturaFeita == 2) {
+					al_draw_scaled_bitmap(elementoLeve, 46, 50, 159, 155, 180, 410, 50, 50, 0);
+					al_draw_scaled_bitmap(elementoPesado, 46, 50, 159, 155, 290, 410, 50, 50, 0);
+				}
+				if (misturaFeita == 3) {
+					al_draw_scaled_bitmap(elementoLeve, 46, 50, 159, 155, 180, 410, 50, 50, 0);
+					al_draw_scaled_bitmap(elementoPesado, 46, 50, 159, 155, 290, 410, 50, 50, 0);
+					//al_draw_scaled_bitmap(elementoNatural, 46, 50, 159, 155, 400, 410, 50, 50, 0);
+
+				}
+				//mudar a cor da bala com as teclas E, R e Q
+				if (corBala = 2) {
+					if (al_key_down(&teclado, ALLEGRO_KEY_E)) {
+						al_draw_rectangle(160, 400, 260, 460, al_map_rgb(255, 255, 0), 2);
+					}
+				}
+				else if (corBala = 1) {
+					if (al_key_down(&teclado, ALLEGRO_KEY_Q)) {
+						al_draw_rectangle(160, 400, 260, 460, al_map_rgb(255, 255, 255), 2);
+					}
+				}
+				else if (corBala = 0) {
+					if (al_key_down(&teclado, ALLEGRO_KEY_R)) {
+						al_draw_rectangle(160, 400, 260, 460, al_map_rgb(0, 0, 255), 2);
+					}
+				}
+
 
 			}
 
@@ -763,7 +830,7 @@ int main() {
 
 				
 
-				laboratorio_desenhar(fonte, largura_tela, altura_tela, laboratorioIMG, &elementos, &bloco1, &bloco2, &mouse, elementoLeve, elementoPesado);
+				laboratorio_desenhar(fonte, largura_tela, altura_tela, laboratorioIMG, &elementos, &bloco1, &bloco2, &mouse, elementoLeve, elementoPesado, receita, &receitaV, &prontoPJogo, &misturas, &misturaFeita);
 
 
 
@@ -775,6 +842,7 @@ int main() {
 	}
 
 	al_destroy_bitmap(elementoLeve);
+	al_destroy_bitmap(receita);
 	al_destroy_bitmap(elementoPesado);
 	al_destroy_bitmap(laboratorioIMG);
 	al_destroy_bitmap(chaoImg);

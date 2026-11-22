@@ -1,6 +1,4 @@
-﻿  LaboratorioJOGO.c
-  Skelements.c
-C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\Skelements.c(766,76): warning C4047: 'função': 'Elementos *' difere em níveis de indireção de 'Elementos (*)[5]'
-C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\Skelements.c(766,76): warning C4024: 'laboratorio_desenhar': tipos diferentes para parâmetro formal e real 5
-  Gerando Código...
+﻿  Skelements.c
+C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\Skelements.c(833,76): warning C4047: 'função': 'Elementos *' difere em níveis de indireção de 'Elementos (*)[5]'
+C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\Skelements.c(833,76): warning C4024: 'laboratorio_desenhar': tipos diferentes para parâmetro formal e real 5
   PI2.vcxproj -> C:\Users\arthu\OneDrive\Documentos\GitHub\PI2-allegro-.C\PI2\x64\Debug\PI2.exe
