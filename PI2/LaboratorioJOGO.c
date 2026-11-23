@@ -194,16 +194,15 @@ void laboratorio_desenhar(
         
         al_draw_textf(fonte,al_map_rgb(255,255,255), 345, 100, 0, "RECEITAS");
 
-        if (*misturas == 0) {
+        if (*misturas >= 0) {
             al_draw_textf(fonte, al_map_rgb(255, 255, 255), 290, 180, 0, "H + O = elementos leves");
         }
-        else if (*misturas = 1) {
-            al_draw_textf(fonte, al_map_rgb(255, 255, 255), 290, 180, 0, "H + O = elementos leves");
+
+        if (*misturas >= 1) {
             al_draw_textf(fonte, al_map_rgb(255, 255, 255), 290, 230, 0, "Fe + S = elementos metais");
         }
-        else {
-            al_draw_textf(fonte, al_map_rgb(255, 255, 255), 290, 180, 0, "H + O = elementos leves");
-            al_draw_textf(fonte, al_map_rgb(255, 255, 255), 290, 230, 0, "Fe + S = elementos metais");
+
+        if (*misturas >= 2) {
             al_draw_textf(fonte, al_map_rgb(255, 255, 255), 290, 280, 0, "C + O = elementos naturais");
         }
        
