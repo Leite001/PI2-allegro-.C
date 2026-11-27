@@ -723,13 +723,13 @@ int main() {
 			else if (menu == false && jogo == true && laboratorio == false && prontoPJogo == true && rodandoJogo == true)// jogo rodando
 			{
 				//codigo mensagem
-				if (pontos >= 100 && misturaFeita == 1 && misturas == 0)
+				if (pontos >= 1000 && misturaFeita == 1 && misturas == 0)
 				{
 					misturas++;
 					mostrarReceita = true;
 					tempoMensagem = 180;
 				}
-				if (pontos >= 200 && misturaFeita == 2 && misturas == 1) {
+				if (pontos >= 2000 && misturaFeita == 2 && misturas == 1) {
 					misturas++;
 					mostrarReceita = true;
 					tempoMensagem = 180;
