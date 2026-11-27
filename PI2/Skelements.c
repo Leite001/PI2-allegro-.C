@@ -517,6 +517,7 @@ int main() {
 	ALLEGRO_BITMAP* laboratorioIMG = al_load_bitmap("Imagens/tabela_periodica.png");
 	ALLEGRO_BITMAP* elementoLeve = al_load_bitmap("Imagens/leaf(2).png");
 	ALLEGRO_BITMAP* elementoPesado = al_load_bitmap("Imagens/metal.png");
+	ALLEGRO_BITMAP* elementoNatural = al_load_bitmap("Imagens/elementoNatural.png");
 	ALLEGRO_BITMAP* receita = al_load_bitmap("Imagens/book.png");
 	ALLEGRO_BITMAP* inimigoLeve = al_load_bitmap("Imagens/inimigoLeve.png");
 	ALLEGRO_BITMAP* inimigoMetal = al_load_bitmap("Imagens/inimigoMetal.png");
@@ -543,6 +544,8 @@ int main() {
 	bool rodando = true;
 	bool receitaV = false;
 	bool mostrarReceita = false;
+	bool rodandoJogo = false;
+	bool reacao = false;
 	int tempoMensagem = 0;
 	int misturas = 0;
 	int misturaFeita = 0;
@@ -622,6 +625,14 @@ int main() {
 			rodando = false;
 		}
 
+		if (evento.type == ALLEGRO_EVENT_KEY_DOWN) {
+			if (evento.keyboard.keycode == ALLEGRO_KEY_TAB && jogo == true && rodandoJogo == true) {
+				laboratorio = true;
+				jogo = false;
+				menu = false;
+			}
+		}
+
 		if (evento.type == ALLEGRO_EVENT_TIMER) {
 			al_get_keyboard_state(&teclado);
 			al_get_mouse_state(&mouse);
@@ -699,6 +710,7 @@ int main() {
 					menu = false;
 					laboratorio = false;
 					jogo = true;
+					rodandoJogo = true;
 				}
 
 				if (al_mouse_button_down(&mouse, ALLEGRO_MOUSE_BUTTON_LEFT) && mouse.x >= 340 && mouse.x <= 520 && mouse.y >= 365 && mouse.y <= 420) {
@@ -708,16 +720,16 @@ int main() {
 
 				}
 			}
-			else if (menu == false && jogo == true && laboratorio == false && prontoPJogo == true)// jogo rodando
+			else if (menu == false && jogo == true && laboratorio == false && prontoPJogo == true && rodandoJogo == true)// jogo rodando
 			{
 				//codigo mensagem
-				if (pontos >= 1000 && misturaFeita == 1 && misturas == 0)
+				if (pontos >= 100 && misturaFeita == 1 && misturas == 0)
 				{
 					misturas++;
 					mostrarReceita = true;
 					tempoMensagem = 180;
 				}
-				if (pontos >= 2000 && misturaFeita == 2 && misturas == 1) {
+				if (pontos >= 200 && misturaFeita == 2 && misturas == 1) {
 					misturas++;
 					mostrarReceita = true;
 					tempoMensagem = 180;
@@ -759,6 +771,9 @@ int main() {
 				if (principal.vida < 0) {
 					principal.vida = 0;
 				}
+				
+
+
 
 				//desenhos apos al_clear_to_color
 				al_clear_to_color(al_map_rgb(194, 191, 29));
@@ -777,6 +792,8 @@ int main() {
 				al_draw_textf(fonte, al_map_rgb(255, 255, 255), 10, 10, 0, "Vida: %d", principal.vida);
 				al_draw_textf(fonte, al_map_rgb(255, 255, 255), 10, 40, 0, "Pontos: %d", pontos);
 				al_draw_textf(fonte, al_map_rgb(255, 255, 255), largura_tela/2 - 50, altura_tela - 30, 0, "Record: %d", record);
+				al_draw_textf(fonte, al_map_rgb(255, 0, 0), 10, 80, 0, "Tab -> laboratorio");
+				
 
 				//mensagem da receita
 				if (mostrarReceita == true)
@@ -857,16 +874,16 @@ int main() {
 					}
 				}
 				//escolha de elemento
-				if (misturaFeita >= 1) {
+				if (misturaFeita >= 1) {//160, 400, 260, 460
 					al_draw_scaled_bitmap(elementoLeve, 46, 50, 159, 155, 180, 410, 50, 50, 0);
 
 				}
 				if (misturaFeita >= 2) { //400, 400, 500, 460
-					al_draw_scaled_bitmap(elementoPesado, 46, 50, 159, 155, 450, 430, 50, 50, 0);
+					al_draw_scaled_bitmap(elementoPesado, 46, 50, 159, 155, 420, 410, 50, 50, 0);
 				}
-				if (misturaFeita >= 3) {
+				if (misturaFeita >= 3) {//280, 400, 380, 460
 
-					//al_draw_scaled_bitmap(elementoNatural, 46, 50, 159, 155, 400, 410, 50, 50, 0);
+					al_draw_scaled_bitmap(elementoNatural, 18, 20, 180, 165, 300, 410, 50, 50, 0);
 
 				}
 
@@ -892,13 +909,13 @@ int main() {
 				ALLEGRO_MOUSE_STATE mouse;
 				al_get_mouse_state(&mouse);
 
-				laboratorio_atualizar(&mouse, &menu, &laboratorio, &jogo);
-
+				laboratorio_atualizar(&mouse, &menu, &laboratorio, &jogo, &teclado, &rodandoJogo);
+				
 				selectionElemento(elementos, &mouse, &bloco1, &bloco2, &mouseAnterior);
 
 				
 
-				laboratorio_desenhar(fonte, largura_tela, altura_tela, laboratorioIMG, &elementos, &bloco1, &bloco2, &mouse, elementoLeve, elementoPesado, receita, &receitaV, &prontoPJogo, &misturas, &misturaFeita);
+				laboratorio_desenhar(fonte, largura_tela, altura_tela, laboratorioIMG, elementos, &bloco1, &bloco2, &mouse, elementoLeve, elementoPesado, receita, &receitaV, &prontoPJogo, &misturas, &misturaFeita, elementoNatural, &reacao);
 
 
 
@@ -910,6 +927,7 @@ int main() {
 	}
 
 	al_destroy_bitmap(elementoLeve);
+	al_destroy_bitmap(elementoNatural);
 	al_destroy_bitmap(inimigoLeve);
 	al_destroy_bitmap(inimigoMetal);
 	al_destroy_bitmap(inimigoNatural);

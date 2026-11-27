@@ -18,9 +18,9 @@ typedef	struct {
 	float yf;
 }Elementos;
 
-void laboratorio_atualizar(ALLEGRO_MOUSE_STATE* mouse, bool* menu, bool* laboratorio, bool* jogo);
+void laboratorio_atualizar(ALLEGRO_MOUSE_STATE* mouse, bool* menu, bool* laboratorio, bool* jogo, ALLEGRO_KEYBOARD_EVENT* teclado, bool *rodandoJogo);
 
-void laboratorio_desenhar( ALLEGRO_FONT* fonte, int largura_tela, int altura_tela, ALLEGRO_BITMAP* laboratorioIMG, Elementos e[], int *bloco1, int *bloco2, ALLEGRO_MOUSE_STATE* mouse, ALLEGRO_BITMAP* elementoLeve, ALLEGRO_BITMAP* elementoPesado, ALLEGRO_BITMAP* receita, bool *receitaV, bool *prontoPJogo, int *misturas, int *misturaFeita);
+void laboratorio_desenhar( ALLEGRO_FONT* fonte, int largura_tela, int altura_tela, ALLEGRO_BITMAP* laboratorioIMG, Elementos e[], int *bloco1, int *bloco2, ALLEGRO_MOUSE_STATE* mouse, ALLEGRO_BITMAP* elementoLeve, ALLEGRO_BITMAP* elementoPesado, ALLEGRO_BITMAP* receita, bool *receitaV, bool *prontoPJogo, int *misturas, int *misturaFeita, ALLEGRO_BITMAP* elementoNatural, bool *reacao);
 
 
 
